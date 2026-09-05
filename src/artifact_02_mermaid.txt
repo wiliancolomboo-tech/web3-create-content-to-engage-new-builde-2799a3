@@ -1,0 +1,56 @@
+flowchart TD
+    subgraph ClientLayer["Builder & Relayer Layer"]
+        B[New Builder / Participant Wallet]
+        R[Gas Relayer / Sponsor Service]
+        CLI[SolQuest CLI & Test Runner]
+    end
+
+    subgraph ProgramBoundary["SolQuest Protocol Boundary (Anchor Program)"]
+        subgraph Accounts["State Accounts & PDAs"]
+            ConfigPDA["Protocol Config PDA<br/>seeds = ['config']<br/>Stores: Admin, Authority, TotalQuests"]
+            QuestPDA["Quest Account PDA<br/>seeds = ['quest', quest_id]<br/>Stores: RewardPool, Hash, Difficulty, ExpDate"]
+            VaultPDA["Quest Vault PDA<br/>seeds = ['vault', quest_id]<br/>Holds: Escrowed SOL Rewards"]
+            ProgressPDA["Builder Progress PDA<br/>seeds = ['progress', quest_id, builder_pubkey]<br/>Stores: Status, SolvedTimestamp, Score"]
+        end
+
+        subgraph InstructionLogic["Core Instruction Execution"]
+            IX_InitConfig["initialize_protocol()"]
+            IX_CreateQuest["create_quest(quest_id, proof_hash, reward)"]
+            IX_SubmitProof["submit_solution(quest_id, solution_preimage, builder_data)"]
+            IX_ClaimReward["claim_quest_reward(quest_id)"]
+            IX_CloseProgress["close_completed_quest()"]
+        end
+
+        subgraph SecurityGuards["Security & Invariant Matrix"]
+            G1["Signer & Bump Verification"]
+            G2["Preimage SHA256 Collision Check"]
+            G3["Anti-Reentrancy / Double-Claim Lock"]
+            G4["Rent Exemption & Account Boundary Checks"]
+        end
+    end
+
+    subgraph SystemProgram["Solana Native Runtime"]
+        SYS[System Program 11111111111111111111111111111111]
+    end
+
+    %% Client Interactions
+    B -->|1. Request Gasless Tx| R
+    R -->|2. Sign Fee-Payer & Forward| IX_SubmitProof
+    CLI -->|Local Simulation & Validation| B
+
+    %% Instruction to Security & Execution
+    IX_CreateQuest --> G1
+    G1 --> QuestPDA
+    IX_CreateQuest -->|Fund Escrow| VaultPDA
+
+    IX_SubmitProof --> G1
+    IX_SubmitProof --> G2
+    G2 -->|Valid Preimage| ProgressPDA
+    ProgressPDA -.->|State: Completed| G3
+
+    G3 --> IX_ClaimReward
+    IX_ClaimReward -->|CPI Signed by QuestPDA| SYS
+    SYS -->|Disburse SOL| B
+
+    IX_CloseProgress --> G4
+    G4 -->|Rent Reclamation| B

@@ -1,0 +1,18 @@
+solquest/
+├── Anchor.toml
+├── Cargo.toml
+├── programs/
+│   └── solquest/
+│       ├── Cargo.toml
+│       └── src/
+│           ├── error.rs
+│           ├── instructions/
+│           │   ├── claim_reward.rs
+│           │   ├── create_quest.rs
+│           │   ├── initialize.rs
+│           │   ├── mod.rs
+│           │   └── submit_solution.rs
+│           ├── state.rs
+│           └── lib.rs
+└── tests/
+    └── solquest.ts

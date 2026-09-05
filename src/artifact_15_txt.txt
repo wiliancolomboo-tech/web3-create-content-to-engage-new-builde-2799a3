@@ -1,0 +1,18 @@
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| Security Dimension        | Threat Vector                                  | Protocol Mitigation                                |
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| PDA Seed Collision        | Attackers spoofing Progress or Quest PDAs      | Canonical deterministic seeds prefixed with byte   |
+|                           | across different program contexts              | constants & explicit 64-bit LE integer casting     |
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| Reentrancy & Double Claim | Builders executing multiple claims in single   | Strict boolean state latching (`reward_claimed =   |
+|                           | atomic block or recursive CPI                  | true`) before balance execution; single-tx signers |
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| Escrow Drain Trap         | Draining Vault PDA below rent threshold       | Direct balance validation ensuring Vault always    |
+|                           | or attempting negative arithmetic              | satisfies rent exemption or settles to zero lamport|
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| Gas Exhaustion Attacks    | Malicious actors submitting arbitrary large    | Bound checks on vector input size; pre-validation  |
+|                           | solution preimages                             | of preimage hash against fixed 32-byte target      |
++---------------------------+------------------------------------------------+----------------------------------------------------+
+| Sybil Submissions         | Single builder generating multiple identities  | Soulbound Progress accounts keyed to both unique   |
+|                           | to drain micro-incentive pools                 | builder Pubkey AND quest ID; Relayer throttle      |
++---------------------------+------------------------------------------------+----------------------------------------------------+
