@@ -1,0 +1,8 @@
+builder_nexus: Production Integration Test Matrix
+    ✔ 1. Initializes hackathon with 2 milestones & funds escrow vault (412ms)
+    ✔ 2. Registers new builder with GitHub identity handle (225ms)
+    ✔ 3. Builder submits proof of Milestone 0 (198ms)
+    ✔ 4. Rejects milestone verification if signed by unauthorized attacker (180ms)
+    ✔ 5. Judge verifies milestone and disburses bounty micro-grant (241ms)
+
+  5 passing (1.3s)

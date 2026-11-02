@@ -1,0 +1,8 @@
+SolanaForge Vault Integration Matrix
+    ✔ 1. Initializes Global Config and Vault Authority PDAs correctly (452ms)
+    ✔ 2. Stakes tokens and creates UserStakeRecord with accurate math (284ms)
+    ✔ 3. Accrues yield over slot progression and allows reward claim (361ms)
+    ✔ 4. Rejects zero-amount deposits (Negative Security Boundary) (112ms)
+    ✔ 5. Allows partial unstaking and returns principal funds correctly (297ms)
+
+  5 passing (2s)

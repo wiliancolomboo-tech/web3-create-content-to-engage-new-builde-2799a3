@@ -1,56 +1,48 @@
 flowchart TD
-    subgraph ClientLayer["Builder & Relayer Layer"]
-        B[New Builder / Participant Wallet]
-        R[Gas Relayer / Sponsor Service]
-        CLI[SolQuest CLI & Test Runner]
+    subgraph ClientLayer ["Builder & Relayer Client Layer"]
+        Builder["Builder Wallet (Signer)"]
+        Sponsor["Sponsor / Admin (Signer)"]
+        Relayer["Keeper / Verification Relayer"]
     end
 
-    subgraph ProgramBoundary["SolQuest Protocol Boundary (Anchor Program)"]
-        subgraph Accounts["State Accounts & PDAs"]
-            ConfigPDA["Protocol Config PDA<br/>seeds = ['config']<br/>Stores: Admin, Authority, TotalQuests"]
-            QuestPDA["Quest Account PDA<br/>seeds = ['quest', quest_id]<br/>Stores: RewardPool, Hash, Difficulty, ExpDate"]
-            VaultPDA["Quest Vault PDA<br/>seeds = ['vault', quest_id]<br/>Holds: Escrowed SOL Rewards"]
-            ProgressPDA["Builder Progress PDA<br/>seeds = ['progress', quest_id, builder_pubkey]<br/>Stores: Status, SolvedTimestamp, Score"]
-        end
-
-        subgraph InstructionLogic["Core Instruction Execution"]
-            IX_InitConfig["initialize_protocol()"]
-            IX_CreateQuest["create_quest(quest_id, proof_hash, reward)"]
-            IX_SubmitProof["submit_solution(quest_id, solution_preimage, builder_data)"]
-            IX_ClaimReward["claim_quest_reward(quest_id)"]
-            IX_CloseProgress["close_completed_quest()"]
-        end
-
-        subgraph SecurityGuards["Security & Invariant Matrix"]
-            G1["Signer & Bump Verification"]
-            G2["Preimage SHA256 Collision Check"]
-            G3["Anti-Reentrancy / Double-Claim Lock"]
-            G4["Rent Exemption & Account Boundary Checks"]
-        end
+    subgraph ProgramLayer ["BuilderQuest Anchor Program (Program ID: BQst...111)"]
+        Config["ProtocolConfig PDA<br/>seeds=['config']<br/>Stores: admin, fee, track_count"]
+        Track["HackathonTrack PDA<br/>seeds=['track', track_id]<br/>Stores: reward, max_builders, active"]
+        BuilderProfile["BuilderProfile PDA<br/>seeds=['builder', builder_pubkey]<br/>Stores: completed_mask, reputation, bump"]
+        EscrowVault["EscrowVault PDA<br/>seeds=['vault', track_id]<br/>Holds: SOL Rewards (Lamports)"]
+        BadgeMint["Badge Mint PDA<br/>Token-2022 (Non-Transferable)"]
     end
 
-    subgraph SystemProgram["Solana Native Runtime"]
-        SYS[System Program 11111111111111111111111111111111]
+    subgraph NativePrograms ["Solana Native & Extension Programs"]
+        SystemProgram["System Program (1111...1111)"]
+        Token2022["SPL Token-2022 Program"]
+        RentSysvar["Rent Sysvar"]
     end
 
-    %% Client Interactions
-    B -->|1. Request Gasless Tx| R
-    R -->|2. Sign Fee-Payer & Forward| IX_SubmitProof
-    CLI -->|Local Simulation & Validation| B
+    %% Administrative Flow
+    Sponsor -->|"1. initialize_track(track_id, reward_amount)"| Track
+    Sponsor -->|"2. deposit_escrow(lamports)"| EscrowVault
+    EscrowVault -.->|"CPI: system_program::transfer"| SystemProgram
 
-    %% Instruction to Security & Execution
-    IX_CreateQuest --> G1
-    G1 --> QuestPDA
-    IX_CreateQuest -->|Fund Escrow| VaultPDA
+    %% Builder Registration Flow
+    Builder -->|"3. register_builder(github_hash)"| BuilderProfile
+    BuilderProfile -.->|"Derives PDA with canonical bump"| SystemProgram
 
-    IX_SubmitProof --> G1
-    IX_SubmitProof --> G2
-    G2 -->|Valid Preimage| ProgressPDA
-    ProgressPDA -.->|State: Completed| G3
+    %% Quest Verification Flow
+    Builder -->|"4. submit_milestone(track_id, solution_hash)"| BuilderProfile
+    Relayer -->|"5. verify_solution(signature, builder, track_id)"| BuilderProfile
 
-    G3 --> IX_ClaimReward
-    IX_ClaimReward -->|CPI Signed by QuestPDA| SYS
-    SYS -->|Disburse SOL| B
+    %% Reward & Badge Claims
+    Builder -->|"6. claim_reward_and_badge(track_id)"| EscrowVault
+    EscrowVault -->|"CPI: Transfer Lamports"| Builder
+    Track -->|"Check Cap & Payout"| EscrowVault
+    BuilderProfile -->|"CPI: mint_to (Soulbound)"| BadgeMint
+    BadgeMint -.->|"Token-2022 NonTransferable CPI"| Token2022
 
-    IX_CloseProgress --> G4
-    G4 -->|Rent Reclamation| B
+    classDef client fill:#eceff1,stroke:#37474f,stroke-width:2px;
+    classDef program fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef native fill:#e1f5fe,stroke:#0277bd,stroke-width:2px;
+
+    class Builder,Sponsor,Relayer client;
+    class Config,Track,BuilderProfile,EscrowVault,BadgeMint program;
+    class SystemProgram,Token2022,RentSysvar native;

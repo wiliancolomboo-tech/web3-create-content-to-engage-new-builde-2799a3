@@ -1,0 +1,22 @@
++-----------------------------------------------------------------------------------------------+
+| SOLANA SECURITY THREAT VECTOR               | MITIGATION IN BUILDERQUEST                      |
++---------------------------------------------+-------------------------------------------------+
+| 1. Missing Signer Check                     | Enforced via Anchor `Signer<'info>` type on all |
+|                                             | user action instructions (`builder`, `admin`).  |
++---------------------------------------------+-------------------------------------------------+
+| 2. PDA Re-use / Seed Collisions             | Canonical bump storage & combined 3-tier seeds: |
+|                                             | ['builder', quest_hub.key(), builder.key()].    |
++---------------------------------------------+-------------------------------------------------+
+| 3. Arbitrary Account Substitution           | `has_one` structural constraints on profile     |
+|                                             | checking `builder == builder.key()` & hub match.|
++---------------------------------------------+-------------------------------------------------+
+| 4. Escrow Vault Drain (Sybil Exploits)      | Bitwise replay guard: `(bitmask & flag) == 0`.  |
+|                                             | Single-claim enforcement: `claimed == 0`.       |
+|                                             | Vault rent reserve protection guard.            |
++---------------------------------------------+-------------------------------------------------+
+| 5. Reentrancy & Cross-Instruction Poisoning | Solana atomic execution model + zero external   |
+|                                             | state modifications after transfer CPI calls.   |
++---------------------------------------------+-------------------------------------------------+
+| 6. Integer Overflow / Truncation            | `checked_add` and `saturating_sub` on all       |
+|                                             | state counters and balance arithmetic.          |
++---------------------------------------------+-------------------------------------------------+

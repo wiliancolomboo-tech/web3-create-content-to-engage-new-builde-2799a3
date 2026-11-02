@@ -1,18 +1,19 @@
-solquest/
+solana-builder-ignition/
 ├── Anchor.toml
 ├── Cargo.toml
 ├── programs/
-│   └── solquest/
+│   └── builder_ignition/
 │       ├── Cargo.toml
 │       └── src/
-│           ├── error.rs
+│           ├── errors.rs
 │           ├── instructions/
-│           │   ├── claim_reward.rs
-│           │   ├── create_quest.rs
+│           │   ├── close_hackathon.rs
 │           │   ├── initialize.rs
 │           │   ├── mod.rs
-│           │   └── submit_solution.rs
+│           │   ├── register_builder.rs
+│           │   ├── submit_milestone.rs
+│           │   └── verify_and_disburse.rs
 │           ├── state.rs
 │           └── lib.rs
 └── tests/
-    └── solquest.ts
+    └── builder_ignition.ts

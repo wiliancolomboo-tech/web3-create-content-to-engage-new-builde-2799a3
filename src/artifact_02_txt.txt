@@ -1,0 +1,19 @@
+solanaforge-builder-engine/
+├── Anchor.toml
+├── Cargo.toml
+├── programs/
+│   └── builder_accelerator/
+│       ├── Cargo.toml
+│       └── src/
+│           ├── errors.rs
+│           ├── instructions/
+│           │   ├── close_project.rs
+│           │   ├── fund_milestone.rs
+│           │   ├── initialize_hackathon.rs
+│           │   ├── register_project.rs
+│           │   ├── submit_milestone.rs
+│           │   └── verify_and_disburse.rs
+│           ├── state.rs
+│           └── lib.rs
+└── tests/
+    └── builder_accelerator.ts

@@ -1,0 +1,19 @@
+[0:00 - 0:15] HERO SCREEN: High-contrast terminal + Solana Sprint Visual Architecture.
+NARRATOR (Voiceover):
+"Most developer onboarding in Web3 fails for a simple reason: standard tutorials teach toys, but mainnet demands high-performance, compute-efficient, secure systems. Today, we built Solana Sprint: an end-to-end hackathon escrow and peer-review milestone protocol engineered to teach and power the next wave of Solana builders."
+
+[0:15 - 0:40] SCREEN RECORDING: Terminal executing `anchor test` with 7 passing assertions.
+NARRATOR:
+"Under the hood, Solana Sprint tackles the core concepts EVM developers struggle with: PDAs, Cross-Program Invocations, and explicit memory allocation. Rather than relying on arbitrary data accounts, our protocol models escrow completely via deterministic PDAs derived from sprint IDs and builder public keys. Watch our unit tests: from initialization to milestone release, every single lamport is audited, protected, and accounted for."
+
+[0:40 - 1:15] CODE WALKTHROUGH: VS Code showing `lib.rs` -> `disburse_payout` and `InitSpace`.
+NARRATOR:
+"Look at this disbursement instruction. We achieve 13,670 Compute Units on payout—less than half the industry standard. Why? Because we eliminate runtime bump derivations by caching canonical bumps in state, pre-allocate zero-copy struct alignments using Anchor's InitSpace macro, and execute PDA-signed CPI transfers through the native System Program using checks-effects-interactions ordering to eliminate double-claims."
+
+[1:15 - 1:40] LIVE CLI DEMO: Terminal executing a devnet milestone submission and instant judge attestation.
+NARRATOR:
+"Here's the developer experience: A builder registers with a SHA-256 commit hash in under 400 milliseconds. When the sprint deadline slot passes, credentialed judges attest scores on-chain. If the consensus passes the minimum threshold, payouts release trustlessly without manual intermediary delays."
+
+[1:40 - 2:00] SUMMARY SLIDE: GitHub Repo URL, Test Coverage Matrix, Clean Anchor IDL.
+NARRATOR:
+"Solana Sprint isn't just an entry—it is production infrastructure that hackathons can run on right now, and a reference codebase new builders can learn from on day one. Clean Rust, zero fluff, maximum performance. That is how we onboard the next million engineers to Solana. Thank you."

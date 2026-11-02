@@ -1,0 +1,32 @@
+================================================================================
+TIME     | VISUAL SCREEN                               | AUDIO NARRATIVE / SPOKEN SCRIPT
+================================================================================
+0:00-0:15 | Split screen: Left side shows 20 tabbed    | "Every hackathon, thousands of brilliant builders
+         | terminal errors; right side shows clean    | drop out before submitting. Why? Setting up 
+         | `anchor test` passing instantly.           | robust Solana architectures with PDAs, CPIs, and 
+         | Big Text: "Stop Fighting Toolchains."      | secure token vaults shouldn't take three days.
+         |                                            | It should take two minutes."
+
+0:15-0:45 | Terminal screencast: Executing             | "Meet Solana Builder Sprint: an on-chain quest 
+         | `anchor test`. Flowing logs showing        | engine and production-grade hackathon starter kit.
+         | deterministic PDA derivation, account      | It delivers a fully-tested Anchor 0.30 codebase
+         | initialization, and SPL reward disbursal.  | implementing non-custodial milestone escrows.
+         | Highlight code snippets in VS Code.        | Builders don't start from an empty repo; they build 
+         |                                            | on top of idiomatic, audited architecture."
+
+0:45-1:15 | Architectural Diagram Animation:           | "Notice our security controls: canonical bump caching 
+         | Organizer -> Escrow PDA -> Attestation ->  | eliminates dynamic address derivation overhead. Strict
+         | SPL Token CPI -> Builder ATA.              | account constraints prevent unauthorized fund drainage,
+         | CU Gauge reads: 14,680 Compute Units.      | and state transitions use atomic CPI transfers consuming 
+         |                                            | under 15,000 compute units."
+
+1:15-1:45 | Browser view: Devnet explorer showing      | "For organizers, it eliminates manual spreadsheet 
+         | verified transactions and token payouts.   | tracking by releasing bounty prizes programmatically. 
+         | VS Code: Running custom exploit test       | For participants, it's a living playground to master 
+         | proving unauthorized attestation fails.    | real-world Solana development while qualifying for 
+         |                                            | live bounties directly on-chain."
+
+1:45-2:00 | Call-to-Action slide with GitHub Repo,     | "Don't let toolchain friction kill builder momentum. 
+         | `npx create-solana-sprint` command, and    | Clone the repo, launch localnet, and ship your 
+         | QR code to the documentation.              | first Solana protocol today. Let's build!"
+================================================================================

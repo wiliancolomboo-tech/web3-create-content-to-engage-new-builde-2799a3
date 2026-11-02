@@ -1,9 +1,6 @@
-+----------------------------------------------------------------------------------------------------+
-|                                         SOLQUEST PLATFORM                                          |
-+----------------------------------------------------------------------------------------------------+
-|  • Zero-Setup Gasless Onboarding   : Sponsored transactions via Relayer/Fee-Payer patterns         |
-|  • Deterministic Proof-of-Skill    : On-chain programmatic verification of Sealevel primitives     |
-|  • Canonical Reference Blueprint   : Idiomatic Anchor 0.30+ architecture used as a live curriculum |
-|  • Soulbound Achievement PDAs      : Verifiable, non-transferable on-chain builder credentials     |
-|  • Instant Liquidity Micro-Grants  : Program-controlled vault disbursements upon milestone completion|
-+----------------------------------------------------------------------------------------------------+
+Web2 / EVM Devs  ───►  [BuilderQuest Scaffold]
+                                       │
+            ┌──────────────────────────┴──────────────────────────┐
+            ▼                                                     ▼
+   Verifiable On-Chain Milestones                        Gas Payer Escrow & Non-
+   (PDA State & Reentrancy Guards)                       Transferable Token-2022 Badges

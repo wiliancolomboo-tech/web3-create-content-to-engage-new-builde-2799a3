@@ -1,0 +1,10 @@
+builder_quest core flow and security vectors
+    ✔ T01: Initializes protocol configuration successfully (412ms)
+    ✔ T02: Sponsor creates a track and initializes vault PDA (289ms)
+    ✔ T03: Sponsor funds the track escrow vault (245ms)
+    ✔ T04: Builder registers profile (261ms)
+    ✔ T05: Builder completes quest milestone and receives lamports (310ms)
+    ✔ T06: Fails when builder attempts double claim (Replay Protection) (198ms)
+    ✔ T07: Fails when unauthorized oracle signs milestone completion (204ms)
+
+  7 passing (2.4s)

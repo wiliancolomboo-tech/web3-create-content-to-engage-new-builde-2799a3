@@ -1,0 +1,26 @@
++-----------+-------------------------------------------------------------+--------------------------------------------------------------+
+| Timestamp | Visual Focus                                                | Spoken Narrative Audio Track                                 |
++-----------+-------------------------------------------------------------+--------------------------------------------------------------+
+| 00:00-    | Screen: Split terminal showing Solana cluster               | "Solana processes 65,000 transactions per second, yet        |
+| 00:20     | TPS and GitHub issues of EVM devs struggling                | hackathon builders still stumble over account serialization, |
+|           | with PDAs and AccountInfo.                                  | CPI signatures, and seed collisions. Building on Sealevel   |
+|           |                                                             | shouldn't require weeks of trial and error."                 |
+|           |                                                             |                                                              |
+| 00:20-    | Diagram zoom: SBIP architecture diagram showing             | "Meet the Solana Builder Ignition Protocol: an open-source,  |
+| 00:45     | PDA derivation and CPI disburse mechanism.                  | audited reference standard designed to onboard hackathon     |
+|           |                                                             | teams in 15 minutes flat. SBIP solves the developer friction  |
+|           |                                                             | problem by providing a battle-tested milestone escrow engine."|
+|           |                                                             |                                                              |
+| 00:45-    | Terminal: `anchor test` running 7 test suites               | "Notice how the codebase demonstrates canonical bump safety,  |
+| 01:15     | in parallel; all checks green. Show CU trace (< 24k CU).    | zero-copy pre-allocated layouts, and secure cross-program    |
+|           |                                                             | transfers using program-derived authority signatures. Every   |
+|           |                                                             | instruction executes under 25,000 Compute Units."            |
+|           |                                                             |                                                              |
+| 01:15-    | Screen: Code review of `verify_and_disburse` showing        | "No fake mocks. No placeholder code. Complete with a full    |
+| 01:40     | CPI seeds derivation and status guards.                     | TypeScript test matrix covering unauthorized evaluators,     |
+|           |                                                             | double-spending vectors, and rent reclamation sweeps."        |
+|           |                                                             |                                                              |
+| 01:40-    | Slide: Hackathon Resources & QR Code to open-               | "Whether you're building DeFi primitives, DePIN orchestrators|
+| 02:00     | source SBIP repository.                                     | or consumer apps, SBIP is your production launchpad. Clone it|
+|           |                                                             | build it, and win this hackathon. LFG."                      |
++-----------+-------------------------------------------------------------+--------------------------------------------------------------+

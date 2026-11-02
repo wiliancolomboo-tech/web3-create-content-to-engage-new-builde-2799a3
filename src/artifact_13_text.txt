@@ -1,0 +1,10 @@
+Solana HackEngine QA Test Matrix
+    ✔ T01: Initializes the HackEngine master config (452ms)
+    ✔ T02: Registers builder 'Alice' successfully (421ms)
+    ✔ T03: Fails to register builder with handle > 32 characters (189ms)
+    ✔ T04: Admin creates Quest #101 with deterministic hash target (405ms)
+    ✔ T05: Rejects incorrect challenge solution proof (Anti-Cheating) (214ms)
+    ✔ T06: Verifies correct solution and increments XP state (468ms)
+    ✔ T07: Prevents duplicate replay submissions via PDA collision (198ms)
+
+  7 passing (2.35s)

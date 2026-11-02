@@ -1,0 +1,55 @@
+flowchart TD
+    subgraph Organizers_and_Keepers ["Sponsors / Hackathon Authority & Verifiers"]
+        Auth[Hackathon Authority / Multisig]
+        Keeper[Automated Verification Keeper]
+    end
+
+    subgraph PDA_State_Hierarchy ["Solana Sealevel Runtime: State & PDAs"]
+        ConfigPDA["Hackathon Config PDA<br/>seeds = ['hackathon', id]<br/>- authority: Pubkey<br/>- total_bounties: u64<br/>- active_tracks: u8"]
+        VaultPDA["Escrow Vault PDA<br/>seeds = ['vault', ConfigPDA]<br/>- Holds Native SOL / SPL Rewards"]
+        QuestPDA["Quest Definition PDA<br/>seeds = ['quest', ConfigPDA, quest_id]<br/>- reward_amount: u64<br/>- verification_type: u8<br/>- max_completions: u32<br/>- current_completions: u32"]
+        BuilderPDA["Builder Profile PDA<br/>seeds = ['builder', ConfigPDA, builder_pubkey]<br/>- completed_mask: u128<br/>- total_xp: u64<br/>- registered_at: i64"]
+    end
+
+    subgraph Client_Layer ["Builder Client & Dev Experience"]
+        BuilderClient["New Hackathon Builder<br/>(CLI / Web3 Frontend)"]
+        TargetProgram["Builder's Hackathon Program<br/>(Deployed on Localnet / Devnet)"]
+    end
+
+    subgraph Execution_Flow ["Transaction Execution & CPIs"]
+        InitTx["1. initialize_hackathon()"]
+        RegisterTx["2. register_builder()"]
+        SubmitTx["3. submit_proof(quest_id, proof_data)"]
+        VerifyTx["4. attest_and_disburse()"]
+        DisburseCPI["5. Vault PDA CPI Transfer<br/>(SystemProgram::transfer)"]
+    end
+
+    %% Wiring connections
+    Auth -->|Initialize Hackathon & Fund Vault| InitTx
+    InitTx --> ConfigPDA
+    InitTx --> VaultPDA
+
+    Auth -->|Configure Milestone Quests| QuestPDA
+
+    BuilderClient -->|Register Profile| RegisterTx
+    RegisterTx --> BuilderPDA
+
+    BuilderClient -->|Deploy / Execute Contract| TargetProgram
+    BuilderClient -->|Submit Transaction Signature / Proof| SubmitTx
+    SubmitTx -.->|Read Proof| Keeper
+
+    Keeper -->|Validate Execution & Attest| VerifyTx
+    VerifyTx -->|Verify Keeper Signer| QuestPDA
+    VerifyTx -->|Bitwise Mask Check & Update| BuilderPDA
+    VerifyTx -->|Trigger Escrow Transfer| DisburseCPI
+    DisburseCPI -->|Transfer SOL Bounty| BuilderClient
+    DisburseCPI -->|State Update| VaultPDA
+
+    %% Security & Constraints
+    classDef pda fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC;
+    classDef exec fill:#0F172A,stroke:#10B981,stroke-width:2px,color:#F8FAFC;
+    classDef actor fill:#312E81,stroke:#818CF8,stroke-width:2px,color:#F8FAFC;
+
+    class ConfigPDA,VaultPDA,QuestPDA,BuilderPDA pda;
+    class InitTx,RegisterTx,SubmitTx,VerifyTx,DisburseCPI exec;
+    class Auth,Keeper,BuilderClient,TargetProgram actor;

@@ -1,0 +1,9 @@
+solspark-engine integration verification
+    ✔ 1. Initializes the Hackathon successfully (482ms)
+    ✔ 2. Registers a project under the Hackathon (391ms)
+    ✔ 3. Funds milestone escrow for the project (412ms)
+    ✔ 4. Builder submits Milestone 1 (320ms)
+    ✔ 5. Judge attests milestone and releases escrow funds (445ms)
+    ✔ 6. Rejects release attempts by non-authorized judges (112ms)
+
+  6 passing (2.16s)

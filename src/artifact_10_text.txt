@@ -1,0 +1,8 @@
+hacktrack-protocol-matrix
+    ✔ 1. Initializes Track and Funds Escrow Vault (412ms)
+    ✔ 2. Registers Builder Profile (289ms)
+    ✔ 3. Submits Project Repository Hash & Metadata (310ms)
+    ✔ 4. Fails when unauthorized judge attempts to grade (198ms)
+    ✔ 5. Judge grades submission; dispatches bounty CPI to builder (451ms)
+
+  5 passing (2s)

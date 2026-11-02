@@ -1,0 +1,12 @@
+Attack Surface                    Defense In Depth Mechanism
+┌─────────────────────────┐         ┌──────────────────────────────────────────────┐
+│  PDA Seed Spoofing      │ ───►    │ Canonical Bump caching & Anchor seeds derive │
+├─────────────────────────┤         ├──────────────────────────────────────────────┤
+│  Integer Overflows      │ ───►    │ Native checked_add/checked_sub everywhere    │
+├─────────────────────────┤         ├──────────────────────────────────────────────┤
+│  Reentrancy / Double-Dip│ ───►    │ Checks-Effects-Interactions (state flag flip)│
+├─────────────────────────┤         ├──────────────────────────────────────────────┤
+│  Lamport Drain via CPI  │ ───►    │ Strict PDA Signer seeds validation in CPI    │
+├─────────────────────────┤         ├──────────────────────────────────────────────┤
+│  Unauthorized Payout    │ ───►    │ has_one = organizer RBAC verification        │
+└─────────────────────────┘         └──────────────────────────────────────────────┘

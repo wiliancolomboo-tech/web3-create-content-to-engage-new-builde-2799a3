@@ -1,0 +1,11 @@
+Solana BuilderQuest Onboarding Protocol Matrix
+    ✔ T01: Initializes the Quest Hub and Funds the Vault Escrow (482ms)
+    ✔ T02: Registers Builder Alice successfully (214ms)
+    ✔ T03: Rejects invalid challenge proof for Builder Alice (125ms)
+    ✔ T04: Solves Challenge #0 and verifies bitmask state transition (220ms)
+    ✔ T05: Prevents replay attack on already completed challenge (118ms)
+    ✔ T06: Disburses Builder Gas Grant upon solving first challenge (286ms)
+    ✔ T07: Prevents double claiming of gas grants (109ms)
+    ✔ T08: Solves remaining challenges and marks Quest Track Completed (438ms)
+
+  8 passing (2.1s)

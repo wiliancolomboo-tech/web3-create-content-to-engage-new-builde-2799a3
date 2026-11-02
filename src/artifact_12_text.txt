@@ -1,0 +1,10 @@
+quest-engine integration test suite
+    ✔ 1. Initializes global engine configuration (124ms)
+    ✔ 2. Creates a quest track and seeds the escrow vault (410ms)
+    ✔ 3. Registers a new builder identity (98ms)
+    ✔ 4. Blocks unauthorized verifier from validating milestones (65ms)
+    ✔ 5. Allows authorized verifier to certify steps 0, 1, and 2 sequentially (280ms)
+    ✔ 6. Rejects duplicate completion of the same milestone (Double Spend / Replay Guard) (54ms)
+    ✔ 7. Disburses track bounty to the builder and resets track mask (195ms)
+
+  7 passing (1.23s)

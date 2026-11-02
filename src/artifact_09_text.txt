@@ -1,0 +1,8 @@
+solana_builder_quest: Interactive Onboarding Engine
+    ✔ Initializes the Hackathon Quest Registry (428ms)
+    ✔ Registers a New Builder with Preferred Track (DeFi = 0) (395ms)
+    ✔ Executes Quest 0: Validates Deterministic PDA Derivation Challenge (512ms)
+    ✔ Rejects Replay of Already Completed Quest (184ms)
+    ✔ Executes Quest 1: Validates Hash-Based Cryptographic Pre-image (476ms)
+
+  5 passing (2.4s)

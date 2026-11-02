@@ -1,0 +1,1 @@
+solana address -k target/deploy/hack_engine-keypair.json
